@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "capabilities": [
+    "docker.container.inspect",
+    "docker.container.start",
+    "docker.container.stop",
+    "docker.container.restart",
+    "docker.container.logs.read",
+    "docker.image.list",
+    "docker.volume.prune",
+    "docker.network.disconnect",
+    "redis.ping",
+    "redis.info",
+    "redis.bgsave",
+    "redis.config.get",
+    "redis.config.set",
+    "redis.flushdb",
+    "redis.flushall",
+    "ssh.command.readonly",
+    "ssh.command.mutating",
+    "systemd.unit.status",
+    "systemd.unit.start",
+    "systemd.unit.stop",
+    "systemd.unit.restart",
+    "systemd.daemon.reload"
+  ]
+}

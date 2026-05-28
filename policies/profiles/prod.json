@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "profile": "prod",
+  "inherits": [
+    "base"
+  ],
+  "default_action": "supervised",
+  "dangerous_operations_default": "deny",
+  "require_approval_for_risk_tiers": [
+    "moderate",
+    "high",
+    "critical"
+  ],
+  "max_blast_radius_scope": "host",
+  "deny_capabilities": [
+    "redis.flushall",
+    "docker.volume.prune",
+    "ssh.command.mutating"
+  ],
+  "supervise_capabilities": [
+    "docker.container.restart",
+    "systemd.unit.restart",
+    "systemd.daemon.reload"
+  ],
+  "allow_capabilities": [
+    "docker.container.inspect",
+    "docker.container.logs.read",
+    "redis.info",
+    "redis.ping",
+    "systemd.unit.status",
+    "ssh.command.readonly"
+  ],
+  "adapter_constraints": {
+    "docker": {
+      "deny_capabilities": [
+        "docker.volume.prune"
+      ],
+      "supervise_capabilities": [
+        "docker.container.restart"
+      ],
+      "max_blast_radius_scope": "host"
+    },
+    "redis": {
+      "deny_capabilities": [
+        "redis.flushall"
+      ],
+      "supervise_capabilities": [
+        "redis.bgsave"
+      ],
+      "max_blast_radius_scope": "service"
+    },
+    "ssh": {
+      "deny_capabilities": [
+        "ssh.command.mutating"
+      ],
+      "supervise_capabilities": [],
+      "max_blast_radius_scope": "host"
+    }
+  }
+}

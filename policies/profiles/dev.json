@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "profile": "dev",
+  "inherits": [
+    "base"
+  ],
+  "default_action": "allow",
+  "dangerous_operations_default": "supervised",
+  "require_approval_for_risk_tiers": [
+    "critical"
+  ],
+  "max_blast_radius_scope": "region",
+  "deny_capabilities": [],
+  "supervise_capabilities": [
+    "ssh.command.mutating",
+    "docker.volume.prune",
+    "redis.flushall"
+  ],
+  "allow_capabilities": [],
+  "adapter_constraints": {
+    "redis": {
+      "deny_capabilities": [],
+      "supervise_capabilities": [
+        "redis.flushall"
+      ],
+      "max_blast_radius_scope": "service"
+    }
+  }
+}

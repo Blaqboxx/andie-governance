@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blaqboxx.github.io/andie-governance/schemas/adapter_manifest.schema.json",
+  "title": "ANDIE Adapter Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "adapter_id",
+    "display_name",
+    "version",
+    "audited",
+    "execution",
+    "capabilities",
+    "blast_radius",
+    "telemetry_requirements",
+    "governance"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "adapter_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "audited": {
+      "type": "boolean"
+    },
+    "execution": {
+      "type": "object",
+      "required": ["dry_run_supported", "rollback"],
+      "additionalProperties": false,
+      "properties": {
+        "dry_run_supported": {
+          "type": "boolean"
+        },
+        "rollback": {
+          "type": "object",
+          "required": ["feasible", "strategies"],
+          "additionalProperties": false,
+          "properties": {
+            "feasible": {
+              "type": "boolean"
+            },
+            "strategies": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 3 },
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "operation",
+          "scope",
+          "risk_tier",
+          "dangerous",
+          "production_default",
+          "requires_approval",
+          "audit_classification"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 3 },
+          "operation": { "type": "string", "minLength": 3 },
+          "scope": {
+            "type": "string",
+            "enum": ["observe", "diagnose", "configure", "restart", "recover", "rollback"]
+          },
+          "risk_tier": {
+            "type": "string",
+            "enum": ["low", "moderate", "high", "critical"]
+          },
+          "dangerous": { "type": "boolean" },
+          "production_default": {
+            "type": "string",
+            "enum": ["deny", "supervised", "allow"]
+          },
+          "requires_approval": { "type": "boolean" },
+          "audit_classification": {
+            "type": "string",
+            "enum": ["read", "change", "sensitive_change", "destructive"]
+          }
+        }
+      }
+    },
+    "blast_radius": {
+      "type": "object",
+      "required": ["scope", "reversible", "max_affected_units"],
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": ["service", "host", "cluster", "region", "global"]
+        },
+        "reversible": { "type": "boolean" },
+        "max_affected_units": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "telemetry_requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["signal", "source", "required_for_verify", "stabilization_window_seconds"],
+        "additionalProperties": false,
+        "properties": {
+          "signal": { "type": "string", "minLength": 3 },
+          "source": { "type": "string", "minLength": 3 },
+          "required_for_verify": { "type": "boolean" },
+          "stabilization_window_seconds": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "required": [
+        "policy_profiles_supported",
+        "least_privilege",
+        "deny_by_default_dangerous"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "policy_profiles_supported": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["dev", "staging", "prod"]
+          },
+          "minItems": 1
+        },
+        "least_privilege": { "type": "boolean" },
+        "deny_by_default_dangerous": { "type": "boolean" }
+      }
+    }
+  }
+}

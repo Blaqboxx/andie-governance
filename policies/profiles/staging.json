@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "profile": "staging",
+  "inherits": [
+    "base"
+  ],
+  "default_action": "supervised",
+  "dangerous_operations_default": "deny",
+  "require_approval_for_risk_tiers": [
+    "moderate",
+    "high",
+    "critical"
+  ],
+  "max_blast_radius_scope": "cluster",
+  "deny_capabilities": [
+    "redis.flushall"
+  ],
+  "supervise_capabilities": [
+    "docker.container.restart",
+    "systemd.unit.restart",
+    "systemd.daemon.reload",
+    "ssh.command.mutating"
+  ],
+  "allow_capabilities": [
+    "docker.container.inspect",
+    "redis.info",
+    "systemd.unit.status",
+    "ssh.command.readonly"
+  ],
+  "adapter_constraints": {
+    "docker": {
+      "deny_capabilities": [
+        "docker.volume.prune"
+      ],
+      "supervise_capabilities": [
+        "docker.container.restart"
+      ],
+      "max_blast_radius_scope": "host"
+    }
+  }
+}

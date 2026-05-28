@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "profile": "base",
+  "inherits": [],
+  "default_action": "supervised",
+  "dangerous_operations_default": "deny",
+  "require_approval_for_risk_tiers": [
+    "high",
+    "critical"
+  ],
+  "max_blast_radius_scope": "cluster",
+  "deny_capabilities": [],
+  "supervise_capabilities": [],
+  "allow_capabilities": [],
+  "adapter_constraints": {}
+}
